@@ -24,6 +24,8 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install dotnet-coverage
           dotnet tool install coverlet.console
+      - name: build
+        run: cd spacebattle && dotnet build
 
       - name: Run the unit tests with code coverage
         run: cd spacebattle/SpaceBattle.Lib.Tests && dotnet dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
