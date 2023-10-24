@@ -12,6 +12,12 @@ public class Vector
         this.coordinates = coordinates;
         this.coord_cont = coordinates.Length;
     }
+    public static Vector IsNotNull(Vector a){
+        if (a.coordinates.Length == 0){
+            throw new System.Exception();
+        }
+        return a;
+    }
     public static Vector operator +(Vector a, Vector b){
         Vector c = new(new int[a.coord_cont]);
         for (int i = 0;i <a.coord_cont;i++){

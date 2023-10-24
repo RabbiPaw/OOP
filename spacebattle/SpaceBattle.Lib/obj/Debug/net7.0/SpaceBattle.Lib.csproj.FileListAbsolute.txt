@@ -1,0 +1,11 @@
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\bin\Debug\net7.0\SpaceBattle.Lib.deps.json
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\bin\Debug\net7.0\SpaceBattle.Lib.dll
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\bin\Debug\net7.0\SpaceBattle.Lib.pdb
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.AssemblyInfoInputs.cache
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.AssemblyInfo.cs
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.csproj.CoreCompileInputs.cache
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.dll
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\refint\SpaceBattle.Lib.dll
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\SpaceBattle.Lib.pdb
+C:\Users\sivit\OneDrive\Рабочий стол\Folder\OOP\spacebattle\SpaceBattle.Lib\obj\Debug\net7.0\ref\SpaceBattle.Lib.dll
