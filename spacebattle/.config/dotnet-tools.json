@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-coverage": {
+      "version": "17.9.3",
+      "commands": [
+        "dotnet-coverage"
+      ]
+    },
+    "coverlet.console": {
+      "version": "6.0.0",
+      "commands": [
+        "coverlet"
+      ]
+    }
+  }
+}
