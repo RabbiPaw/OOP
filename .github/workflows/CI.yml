@@ -30,5 +30,5 @@ jobs:
       - name: Run the unit tests with code coverage
         run: cd spacebattle/SpaceBattle.Lib.Tests && dotnet dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
       - name: Coverage
-        run: dotnet coverlet spacebattle/SpaceBattle.Lib.Tests/bin/Debug/net7.0/SpaceBattle.Lib.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
+        run: dotnet coverlet spacebattle/SpaceBattle.Lib.Tests/bin/Debug/net7.0/SpaceBattle.Lib.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="SpaceBattle.Lib.Tests/coverage.xml"
       
