@@ -4,4 +4,5 @@ public interface ICommand
 {
     public void Execute();
     public void Check();
+    public void TurnAbilityCheck();
 }

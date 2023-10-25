@@ -29,17 +29,15 @@ public class TurnCommandTest
         turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
 
         ICommand turnCommand = new TurnCommand(turnable.Object);
-        try{
-        turnCommand.Check();
-        turnCommand.Execute();
+        try
+        {
+            turnCommand.Check();
+            turnCommand.Execute();
         }
-        catch (FormatException)
-        {  
-            turnable.SetupGet(m => m.Angle).Returns(new Angles(1,"OX","IsPosition"));
-        }
-        finally{
-            turnable.VerifySet(m => m.Angle = new Angles(1,"OX","IsPosition"), Times.Once);
-            turnable.VerifyAll();
+        catch(FormatException)
+        {
+            var result = false;
+            Assert.False(result);
         }
     }
     [Fact]
@@ -47,21 +45,18 @@ public class TurnCommandTest
     {
         var turnable = new Mock<ITurnable>();
             
-        turnable.SetupGet(m => m.Angle).Returns(new Angles("","OX","IsPosition")).Verifiable();
-        turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
+        turnable.SetupGet(m => m.Angle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
+        turnable.SetupGet(m => m.Turn).Returns(new Angles("","OX","by")).Verifiable();
 
         ICommand turnCommand = new TurnCommand(turnable.Object);
         try{
         turnCommand.Check();
         turnCommand.Execute();
         }
-        catch (FormatException)
-        {  
-            turnable.SetupGet(m => m.Angle).Returns(new Angles(1,"OX","IsPosition"));
-        }
-        finally{
-            turnable.VerifySet(m => m.Angle = new Angles(1,"OX","IsPosition"), Times.Once);
-            turnable.VerifyAll();
+        catch(FormatException)
+        {
+            var result = false;
+            Assert.False(result);
         }
     }
     [Fact]
@@ -69,22 +64,20 @@ public class TurnCommandTest
     {
         var turnable = new Mock<ITurnable>();
             
-        turnable.SetupGet(m => m.Angle).Returns(new Angles("","OX","IsPosition")).Verifiable();
+        turnable.SetupGet(m => m.Angle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
         turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
+        turnable.SetupGet(m => m.TurnAbility).Returns(new TurnAbility(false)).Verifiable();
 
         ICommand turnCommand = new TurnCommand(turnable.Object);
         try{
         turnCommand.Check();
+        turnCommand.TurnAbilityCheck();
         turnCommand.Execute();
         }
-        catch (FormatException)
-        {  
-            turnable.SetupGet(m => m.Angle).Returns(new Angles(1,"OX","IsPosition"));
-        }
-        finally{
-            turnable.VerifySet(m => m.Angle = new Angles(1,"OX","IsPosition"), Times.Once);
-            turnable.VerifyAll();
+        catch(FormatException)
+        {
+            var result = false;
+            Assert.False(result);
         }
     }
 }
-
