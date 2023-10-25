@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {}
+    "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {
+    "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
+        "projectUniqueName": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
         "projectName": "SpaceBattle.Lib",
-        "projectPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
+        "projectPath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
         "packagesPath": "C:\\Users\\sivit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\obj\\",
+        "outputPath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sivit\\AppData\\Roaming\\NuGet\\NuGet.Config"
