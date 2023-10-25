@@ -1,8 +1,10 @@
+
+
 namespace SpaceBattle.Lib
 {
     public interface ITurnable
     {
-        public Angles Anglle {get; set; }
+        public Angles Angle {get; set; }
         public Angles Turn {get;}
     }
     public class TurnCommand : ICommand{
@@ -12,7 +14,11 @@ namespace SpaceBattle.Lib
             this.turnable = turnable;
         }
         public void Execute(){
-            turnable.Anglle += turnable.Turn;
+            turnable.Angle += turnable.Turn;
+        }
+        public void Check(){
+            Angles.UncorrectInput(turnable.Angle);
+            Angles.UncorrectInput(turnable.Turn);
         }
 
     }
