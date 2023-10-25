@@ -2,8 +2,8 @@ namespace SpaceBattle.Lib
 {
     public interface ITurnable
     {
-        public int Anglle {get; set; }
-        public int Turn {get;}
+        public Angles Anglle {get; set; }
+        public Angles Turn {get;}
     }
     public class TurnCommand : ICommand{
         private readonly ITurnable turnable;

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+PSY77RHCV261yeVUehr/yWfKqre751mB53tUULF9P7fTwSfLDgpppa2e3mcdlX3yS6NfqkGkHCjWoApdAesLw==",
+  "dgSpecHash": "Tpevx56EhnesA3sX9pLgYimI1HB+3brmLq5p+L1LjqEnCeutPZvQhx8GDJFUKQdj1m0JQT10AK9IbKbzB/pATQ==",
   "success": true,
-  "projectFilePath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
+  "projectFilePath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sivit\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\sivit\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",

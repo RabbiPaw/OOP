@@ -9,14 +9,14 @@ public class TurnCommandTest
     {
         var turnable = new Mock<ITurnable>();
 
-        turnable.SetupGet(m => m.Anglle).Returns(45).Verifiable();
-        turnable.SetupGet(m => m.Turn).Returns(45).Verifiable();
+        turnable.SetupGet(m => m.Anglle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
+        turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
 
         ICommand turnCommand = new TurnCommand(turnable.Object);
 
         turnCommand.Execute();
 
-        turnable.VerifySet(m => m.Anglle = 90, Times.Once);
+        turnable.VerifySet(m => m.Anglle = new Angles(90,"OX","IsPosition"), Times.Once);
         turnable.VerifyAll();
     }
 }

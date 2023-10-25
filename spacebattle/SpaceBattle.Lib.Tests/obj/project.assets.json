@@ -5667,11 +5667,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
       "projectName": "SpaceBattle.Lib.Tests",
-      "projectPath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
+      "projectPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\SpaceBattle.Lib.Tests.csproj",
       "packagesPath": "C:\\Users\\sivit\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\obj\\",
+      "outputPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sivit\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -5686,8 +5686,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {
-              "projectPath": "c:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj"
+            "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj": {
+              "projectPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj"
             }
           }
         }
