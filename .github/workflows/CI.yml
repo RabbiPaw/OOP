@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ["SpaceBattle1"]
+    branches: ["LR_1"]
 
 jobs:
   build:
