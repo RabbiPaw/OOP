@@ -7,12 +7,12 @@ public class MoveCommandTest
     [Fact]
     public void MoveCommand1()
     {
-        var movable = new Mock<IMovable>();
+        var movable = new Mock<IMovableTurnable>();
 
         movable.SetupGet(m => m.Position).Returns(new Vector ( 12, 5 )).Verifiable();
         movable.SetupGet(m => m.Velocity).Returns(new Vector ( -5, 3 )).Verifiable();
 
-        ICommand moveCommand = new MoveCommand(movable.Object);
+        ICommand moveCommand = new MoveTurnCommand(movable.Object);
 
         moveCommand.Execute();
 
@@ -24,13 +24,13 @@ public class MoveCommandTest
     public void MoveCommand2()
     {
 
-        var movable = new Mock<IMovable>();
+        var movable = new Mock<IMovableTurnable>();
         try
         {
             movable.SetupGet(m => m.Position).Returns(new Vector ()).Verifiable();
             movable.SetupGet(m => m.Velocity).Returns(new Vector ( -5, 3 )).Verifiable();
 
-            ICommand moveCommand = new MoveCommand(movable.Object);
+            ICommand moveCommand = new MoveTurnCommand(movable.Object);
 
             moveCommand.Execute();
             moveCommand.Check();
@@ -45,13 +45,13 @@ public class MoveCommandTest
     public void MoveCommand3()
     {
 
-        var movable = new Mock<IMovable>();
+        var movable = new Mock<IMovableTurnable>();
         try
         {
             movable.SetupGet(m => m.Position).Returns(new Vector (12, 5)).Verifiable();
             movable.SetupGet(m => m.Velocity).Returns(new Vector ()).Verifiable();
 
-            ICommand moveCommand = new MoveCommand(movable.Object);
+            ICommand moveCommand = new MoveTurnCommand(movable.Object);
             moveCommand.Execute();
             moveCommand.Check();
         }
@@ -66,14 +66,14 @@ public class MoveCommandTest
     public void MoveCommand4()
     {
 
-        var movable = new Mock<IMovable>();
+        var movable = new Mock<IMovableTurnable>();
         try
         {
             movable.SetupGet(m => m.Position).Returns(new Vector (12, 5)).Verifiable();
             movable.SetupGet(m => m.Velocity).Returns(new Vector ( -5, 3 )).Verifiable();
             movable.SetupGet(m => m.MoveAbility).Returns(new MoveAbility(false)).Verifiable();
 
-            ICommand moveCommand = new MoveCommand(movable.Object);
+            ICommand moveCommand = new MoveTurnCommand(movable.Object);
 
             moveCommand.Execute();
             moveCommand.MoveAbilityCheck();

@@ -7,12 +7,12 @@ public class TurnCommandTest
     [Fact]
     public void TurnCommand1()
     {
-        var turnable = new Mock<ITurnable>();
+        var turnable = new Mock<IMovableTurnable>();
 
         turnable.SetupGet(m => m.Angle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
         turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
 
-        ICommand turnCommand = new TurnCommand(turnable.Object);
+        ICommand turnCommand = new MoveTurnCommand(turnable.Object);
 
         turnCommand.Execute();
 
@@ -23,12 +23,12 @@ public class TurnCommandTest
     [Fact]
     public void TurnCommand2()
     {
-        var turnable = new Mock<ITurnable>();
+        var turnable = new Mock<IMovableTurnable>();
             
         turnable.SetupGet(m => m.Angle).Returns(new Angles("","OX","IsPosition")).Verifiable();
         turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
 
-        ICommand turnCommand = new TurnCommand(turnable.Object);
+        ICommand turnCommand = new MoveTurnCommand(turnable.Object);
         try
         {
             turnCommand.Check();
@@ -43,12 +43,12 @@ public class TurnCommandTest
     [Fact]
     public void TurnCommand3()
     {
-        var turnable = new Mock<ITurnable>();
+        var turnable = new Mock<IMovableTurnable>();
             
         turnable.SetupGet(m => m.Angle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
         turnable.SetupGet(m => m.Turn).Returns(new Angles("","OX","by")).Verifiable();
 
-        ICommand turnCommand = new TurnCommand(turnable.Object);
+        ICommand turnCommand = new MoveTurnCommand(turnable.Object);
         try{
         turnCommand.Check();
         turnCommand.Execute();
@@ -62,13 +62,13 @@ public class TurnCommandTest
     [Fact]
     public void TurnCommand4()
     {
-        var turnable = new Mock<ITurnable>();
+        var turnable = new Mock<IMovableTurnable>();
             
         turnable.SetupGet(m => m.Angle).Returns(new Angles(45,"OX","IsPosition")).Verifiable();
         turnable.SetupGet(m => m.Turn).Returns(new Angles(45,"OX","by")).Verifiable();
         turnable.SetupGet(m => m.TurnAbility).Returns(new TurnAbility(false)).Verifiable();
 
-        ICommand turnCommand = new TurnCommand(turnable.Object);
+        ICommand turnCommand = new MoveTurnCommand(turnable.Object);
         try{
         turnCommand.Check();
         turnCommand.TurnAbilityCheck();

@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\sivit\\.nuget\\packages\\": {}
+    "C:\\Users\\Sviat\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
+      "projectUniqueName": "C:\\Users\\Sviat\\Desktop\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
       "projectName": "SpaceBattle.Lib",
-      "projectPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
-      "packagesPath": "C:\\Users\\sivit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sivit\\OneDrive\\Рабочий стол\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\obj\\",
+      "projectPath": "C:\\Users\\Sviat\\Desktop\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\SpaceBattle.Lib.csproj",
+      "packagesPath": "C:\\Users\\Sviat\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Sviat\\Desktop\\Folder\\OOP\\spacebattle\\SpaceBattle.Lib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sivit\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Sviat\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -59,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
