@@ -1,7 +1,3 @@
-using System.Net;
-using System.Reflection.Metadata;
-using System.Security.Cryptography.X509Certificates;
-
 namespace SpaceBattle.Lib;
 
 public class Vector
@@ -10,13 +6,7 @@ public class Vector
     private int coord_cont;
     public Vector (params int[] coordinates){
         this.coordinates = coordinates;
-        this.coord_cont = coordinates.Length;
-    }
-    public static Vector IsNotNull(Vector a){
-        if (a.coordinates.Length == 0){
-            throw new System.Exception();
-        }
-        return a;
+        coord_cont = coordinates.Length;
     }
     public static Vector operator +(Vector a, Vector b){
         Vector c = new(new int[a.coord_cont]);
@@ -25,16 +15,14 @@ public class Vector
         }
         return c;
     }
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
-    if (obj == null || obj is not Vector)
-    return false;
-    else
-    return coordinates.SequenceEqual( ( (Vector)obj ).coordinates);
+        return coordinates.SequenceEqual( ( (Vector)obj ).coordinates);
     }
+    
 
     public override int GetHashCode()
     {
-    return coordinates.GetHashCode();
+        return coordinates.GetHashCode();
     }
 }

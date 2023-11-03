@@ -4,7 +4,6 @@ public interface IMovable
 {
     public Vector Position { get; set; }
     public Vector Velocity { get; }
-    public MoveAbility MoveAbility { get;}
 }
 
 public class MoveCommand : ICommand
@@ -18,14 +17,4 @@ public class MoveCommand : ICommand
     {
         movable.Position += movable.Velocity;
     }
-    public void Check(){
-        Vector.IsNotNull(movable.Position);
-        Vector.IsNotNull(movable.Velocity);
-    }
-    public void MoveAbilityCheck(){
-        if (movable.MoveAbility == new MoveAbility(false)){
-            throw new System.Exception();
-        }
-    }
-
 }
