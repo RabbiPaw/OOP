@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["LR1_Move"]
+  pull_request:
+    branches :
+      - main 
+
 
 jobs:
   build:
