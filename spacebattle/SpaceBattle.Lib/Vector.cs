@@ -10,9 +10,7 @@ public class Vector
     }
     public static Vector operator +(Vector a, Vector b){
         Vector c = new(new int[a.coord_cont]);
-        for (int i = 0;i <a.coord_cont;i++){
-            c.coordinates[i] = a.coordinates[i]+b.coordinates[i];
-        }
+        c.coordinates = (a.coordinates.Select ((x, index) => x + b.coordinates[index]).ToArray());
         return c;
     }
     public override bool Equals(object obj)
