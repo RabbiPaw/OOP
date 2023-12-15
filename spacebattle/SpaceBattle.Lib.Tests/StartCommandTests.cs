@@ -18,6 +18,12 @@ public class StartCommandTests
             (object[] args) => movement.Object
             ).Execute();
 
+        var injectable = new Mock<ICommand>();
+        IoC.Resolve<Hwdtech.ICommand>(
+            "IoC.Register","Commands.Injectable",
+            (object[] args) => injectable.Object
+            ).Execute();
+
         var setPropertiesCommand = new Mock<ICommand>();
         IoC.Resolve<Hwdtech.ICommand>("IoC.Register","Properties.Set",(object[] args) => setPropertiesCommand.Object ).Execute();
 
