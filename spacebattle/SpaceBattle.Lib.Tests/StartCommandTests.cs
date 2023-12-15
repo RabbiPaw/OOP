@@ -68,7 +68,7 @@ public class StartCommandTests
         var uobject = new Mock<IUObject>();
 
         var startable = new Mock<IMoveCommandStartable>();
-        startable.Setup(s => s.Target).Throws(() => new Exception()).Verifiable();
+        startable.Setup(s => s.Target).Returns(uobject.Object);
         startable.Setup(s => s.Properties).Throws(() => new Exception()).Verifiable();
 
         var startMoveCommand = new StartMoveCommand(startable.Object);
