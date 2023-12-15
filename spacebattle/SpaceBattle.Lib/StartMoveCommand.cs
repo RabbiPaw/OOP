@@ -11,7 +11,8 @@ public class StartMoveCommand : ICommand
         
         _startable.Properties.ToList().ForEach(a => IoC.Resolve<ICommand>("Properties.Set", _startable.Target, a.Key, a.Value).Execute());
         var cmd = IoC.Resolve<ICommand>("Operations.Movement", _startable.Target);
+        var injectable = IoC.Resolve<ICommand>("Commands, Injectable",cmd);
         IoC.Resolve<ICommand>("Properties.Set", _startable.Target, "Operations.Movement", cmd).Execute();
-        IoC.Resolve<IQueue>("Game.Queue").Put(cmd);
+        IoC.Resolve<IQueue>("Game.Queue",injectable);
         }       
 }
