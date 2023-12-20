@@ -1,4 +1,4 @@
-using Hwdtech.Ioc;
+using Hwdtech;
 namespace SpaceBattle.Lib;
 public class MacroCommands : ICommand
 {
@@ -8,12 +8,12 @@ public class MacroCommands : ICommand
     var commandsList = IoC.Resolve<string[]>(ListOfCommands);
         foreach (var command in commandsList)
         {
-            _commands.Add(Ioc.Resolve<ICommand>(command));
+            _commands.Add(IoC.Resolve<ICommand>(command));
         }
     }
     public void Execute(){
-    foreach (var command in _commands){
-        command.Execute();
+        foreach (var command in _commands){
+            command.Execute();
+        }
     }
-}
 }
