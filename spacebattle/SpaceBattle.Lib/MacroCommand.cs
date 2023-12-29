@@ -7,8 +7,8 @@ namespace SpaceBattle.Lib;
 
 public class MacroCommand : ICommand
 {
-    private readonly CreatMacroCommand _cmd;
-    public MacroCommand(CreatMacroCommand cmd){
+    private readonly CreateMacroCommand _cmd;
+    public MacroCommand(CreateMacroCommand cmd){
         this._cmd = cmd;
     }
      public void Execute(){

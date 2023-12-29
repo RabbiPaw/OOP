@@ -2,12 +2,12 @@ using Hwdtech;
 
 namespace SpaceBattle.Lib;
 
-public class CreatMacroCommand : ICommand
+public class CreateMacroCommand : ICommand
 {
     private readonly string _CommandsNames;
     public List<ICommand> cmds = new();
 
-    public CreatMacroCommand(string commands) {
+    public CreateMacroCommand(string commands) {
         this._CommandsNames = commands;
     }
     public void Execute(){
