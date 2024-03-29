@@ -12,7 +12,7 @@ public class SoftStopCommand : ICommand
 
     public void Execute()
     {
-        if(_t.Equals(Thread.CurrentThread))
+        if (_t.Equals(Thread.CurrentThread))
         {
             var old_behaviour = _t.GetBehaviour();
             Action new_behaviour = () =>
