@@ -34,5 +34,5 @@ jobs:
       - name: Restore tool, Coverage and test
         run: cd spacebattle && dotnet tool restore && dotnet coverlet SpaceBattle.Lib.Tests/bin/Debug/net8.0/SpaceBattle.Lib.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
       - name: Checkstyle
-        run: cd spacebattle && dotnet format --verify-no-change
+        run: cd spacebattle && dotnet format --verify-no-changes
       
