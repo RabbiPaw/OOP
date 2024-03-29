@@ -26,7 +26,7 @@ public class ServerThreadTest
         });
     }
     return new ActionCommand(() =>
-                   {
+        {
             if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
             {
                 new HardStopCommand((ServerThread)args[0]).Execute();
