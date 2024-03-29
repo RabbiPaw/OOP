@@ -53,4 +53,17 @@ public class ServerThread
     {
         _thread.Start();
     }
+    public bool IsNotEmpty() 
+    {
+        return Convert.ToBoolean(_queue.Count());
+    }
+    public override bool Equals(object? obj)
+    {
+        return obj != null && obj is Thread thread && _thread == thread;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
