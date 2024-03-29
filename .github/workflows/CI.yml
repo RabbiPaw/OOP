@@ -29,11 +29,9 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install dotnet-coverage
           dotnet tool install coverlet.console
-      - name: Tool Restore
-        run: 
       - name: Build
         run: cd spacebattle && dotnet build
-      - name: Coverage and test
+      - name: Restore tool, Coverage and test
         run: cd spacebattle && dotnet tool restore && dotnet coverlet SpaceBattle.Lib.Tests/bin/Debug/net8.0/SpaceBattle.Lib.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
       - name: Checkstyle
         run: cd spacebattle && dotnet format --verify-no-change
