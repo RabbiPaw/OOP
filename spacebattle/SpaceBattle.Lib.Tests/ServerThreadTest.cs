@@ -1,5 +1,6 @@
 namespace SpaceBattle.Lib.Tests;
 
+using System.Security.Cryptography;
 using System.Collections.Concurrent;
 using System.Reflection.Metadata;
 using Hwdtech;
@@ -104,6 +105,15 @@ public class ServerThreadTest
 
         IoC.Resolve<ICommand>("IoC.Register", "GetQueueCollection", (object[] args) => { return queueCollection; }).Execute();
         IoC.Resolve<ICommand>("IoC.Register", "GetThreadCollection", (object[] args) => { return threadCollection; }).Execute();
+    }
+
+    public Guid CreatGuid()
+    {
+        RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+        byte[] bytes = new byte[16];
+        rng.GetBytes(bytes);
+        Guid uuid = new Guid(bytes);
+        return uuid;
     }
 
     [Fact]
@@ -272,8 +282,8 @@ public class ServerThreadTest
         var startcmd = new Mock<ICommand>();
         startcmd.Setup(cmd => cmd.Execute()).Verifiable();
 
-        Guid first = new Guid.NewGuid().ToString();
-        Guid second = new Guid.NewGuid().ToString();
+        Guid first = CreatGuid();
+        Guid second = CreatGuid();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", first, () => { startcmd.Object.Execute(); }).Execute();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", second).Execute();
 
@@ -282,10 +292,10 @@ public class ServerThreadTest
         IoC.Resolve<ICommand>("Server.Commands.SendCommand", first, cmd.Object).Execute();
         IoC.Resolve<ICommand>("Server.Commands.SendCommand", second, cmd.Object).Execute();
 
-        var _threadCollection = IoC.Resolve<Dictionary<int, ServerThread>>("GetThreadCollection");
+        var _threadCollection = IoC.Resolve<Dictionary<Guid, ServerThread>>("GetThreadCollection");
 
-        var hardStopCommand1 = IoC.Resolve<ICommand>("Server.Commands.HardStop", _threadCollection[1], () => { cmd.Object.Execute(); });
-        var hardStopCommand2 = IoC.Resolve<ICommand>("Server.Commands.HardStop", _threadCollection[2], () =>
+        var hardStopCommand1 = IoC.Resolve<ICommand>("Server.Commands.HardStop", _threadCollection[first], () => { cmd.Object.Execute(); });
+        var hardStopCommand2 = IoC.Resolve<ICommand>("Server.Commands.HardStop", _threadCollection[second], () =>
         {
             cmd.Object.Execute();
             mre.Set();
