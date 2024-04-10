@@ -273,7 +273,7 @@ public class ServerThreadTest
         var startcmd = new Mock<ICommand>();
         startcmd.Setup(cmd => cmd.Execute()).Verifiable();
 
-        Guid first = Guid.NewGuid();;
+        Guid first = Guid.NewGuid();
         Guid second = Guid.NewGuid();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", first, () => { startcmd.Object.Execute(); }).Execute();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", second).Execute();
