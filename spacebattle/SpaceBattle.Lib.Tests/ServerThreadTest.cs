@@ -107,15 +107,6 @@ public class ServerThreadTest
         IoC.Resolve<ICommand>("IoC.Register", "GetThreadCollection", (object[] args) => { return threadCollection; }).Execute();
     }
 
-    public Guid CreatGuid()
-    {
-        RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-        byte[] bytes = new byte[16];
-        rng.GetBytes(bytes);
-        Guid uuid = new Guid(bytes);
-        return uuid;
-    }
-
     [Fact]
 
     public void AnExceptionShouldNotStopServerThread()
@@ -282,8 +273,8 @@ public class ServerThreadTest
         var startcmd = new Mock<ICommand>();
         startcmd.Setup(cmd => cmd.Execute()).Verifiable();
 
-        Guid first = CreatGuid();
-        Guid second = CreatGuid();
+        Guid first = Guid.NewGuid();;
+        Guid second = Guid.NewGuid();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", first, () => { startcmd.Object.Execute(); }).Execute();
         IoC.Resolve<ICommand>("Server.Commands.CreateStartThread", second).Execute();
 
