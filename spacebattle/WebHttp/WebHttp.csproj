@@ -2,14 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hwdtech.IoC" Version="1.0.0" />
+    <PackageReference Include="Hwdtech.Ioc.ScopeBasedIoCImplementation" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.0" />
 	<PackageReference Include="CoreWCF.WebHttp" Version="1.0.0"/>
   </ItemGroup>
-
+  
 </Project>
