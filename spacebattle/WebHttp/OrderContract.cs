@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 using CoreWCF.OpenApi.Attributes;
+using System.Diagnostics.CodeAnalysis;
 
 [assembly: InternalsVisibleTo("SpaceBattle.Lib.Tests")]
-
 namespace WebHttp
 {
     [DataContract(Name = "OrderContract", Namespace = "http://order.com")]
+    [ExcludeFromCodeCoverage]
     internal class OrderContract
     {
         [DataMember(Name = "OrderType", Order = 1)]

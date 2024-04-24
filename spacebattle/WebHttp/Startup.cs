@@ -3,9 +3,11 @@ using CoreWCF.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using WebHttp;
 
+[ExcludeFromCodeCoverage]
 internal sealed class Startup
 {
     public void ConfigureServices(IServiceCollection services)
