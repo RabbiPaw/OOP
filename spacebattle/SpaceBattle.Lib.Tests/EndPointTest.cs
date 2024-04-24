@@ -165,7 +165,7 @@ public class EndPointTest
             var CreatOrderCmd = new Mock<ICommand>();
             CreatOrderCmd.Setup(cmd => cmd.Execute()).Verifiable();
             var StartThreadCMD = new Mock<ICommand>();
-            StartThreadCMD.Setup(cmd => cmd.Execute()).Verifiable();
+            StartThreadCMD.Setup(cmd=> cmd.Execute()).Verifiable();
             IoC.Resolve<ICommand>("Server.Commands.CreateStartThread",ServerId,ThreadId,() =>{StartThreadCMD.Object.Execute();}).Execute();
             IoC.Resolve<ICommand>("IoC.Register","CreatOrderCmd", (object[] args) =>{
                 return CreatOrderCmd.Object;
@@ -228,6 +228,54 @@ public class EndPointTest
             StartThreadCMD.Verify(cmd=> cmd.Execute(),Times.Once());
             CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Once());
         }
+
+        [Fact]
+
+        public void Absence_of_ObjectId_dont_drop_exception()
+        {
+            var ServerId = Guid.NewGuid();
+            var ThreadId = Guid.NewGuid();
+
+            var OrdersList = new List<OrderContract>()
+            {
+                new()
+                { 
+                  OrderType = "start move", 
+                  GameId = ServerId,
+                  ObjectId = null,
+                  Properties = new(){{"Velocity", 1}}
+                },
+                
+                new()
+                {
+                  OrderType = "start rotatement",
+                  GameId = ServerId,
+                  ObjectId = "1",
+                  Properties = new(){{"Angle_Velocity", 1}}
+                }
+            };
+
+            var CreatOrderCmd = new Mock<ICommand>();
+            CreatOrderCmd.Setup(cmd => cmd.Execute()).Verifiable();
+            var StartThreadCMD = new Mock<ICommand>();
+            StartThreadCMD.Setup(cmd => cmd.Execute()).Verifiable();
+            IoC.Resolve<ICommand>("Server.Commands.CreateStartThread",ServerId,ThreadId,() =>{StartThreadCMD.Object.Execute();}).Execute();
+            IoC.Resolve<ICommand>("IoC.Register","CreatOrderCmd", (object[] args) =>{
+                return CreatOrderCmd.Object;
+            }).Execute();
+
+            var webApi = new WebApi();
+
+            var response1 = webApi.PostOrder(OrdersList[0]);
+            var response2 = webApi.PostOrder(OrdersList[1]);
+
+            Assert.Equal("Code 400 - Entered ObjectId don't exist",response1);
+            Assert.Equal("Code 202 - Accepted " + ServerId,response2);
+
+            StartThreadCMD.Verify(cmd=> cmd.Execute(),Times.Once());
+            CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Once());
+        }
+        
 
         [Fact]
 
