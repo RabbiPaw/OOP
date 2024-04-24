@@ -132,7 +132,7 @@ public class EndPointTest
             var response = webApi.PostOrder(OrdersList[0]);
             OrdersList.ForEach(order => webApi.PostOrder(order));
 
-            Assert.Equal("Code 202 - Accepted",response);
+            Assert.Equal("Code 202 - Accepted "+ServerId ,response);
 
             StartThreadCMD.Verify(cmd=> cmd.Execute(),Times.Once());
             CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Exactly(5));
@@ -177,7 +177,7 @@ public class EndPointTest
             var response2 = webApi.PostOrder(OrdersList[1]);
 
             Assert.Equal("Code 400 - Entered GameId don't exist",response1);
-            Assert.Equal("Code 202 - Accepted",response2);
+            Assert.Equal("Code 202 - Accepted " + ServerId,response2);
 
             StartThreadCMD.Verify(cmd=> cmd.Execute(),Times.Once());
             CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Once());
@@ -223,9 +223,78 @@ public class EndPointTest
             var response2 = webApi.PostOrder(OrdersList[1]);
 
             Assert.Equal("Code 400 - Don't have OrderType",response1);
-            Assert.Equal("Code 202 - Accepted",response2);
+            Assert.Equal("Code 202 - Accepted "+ServerId,response2);
 
             StartThreadCMD.Verify(cmd=> cmd.Execute(),Times.Once());
             CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Once());
+        }
+
+        [Fact]
+
+        public void EndPoint_works_in_currient_thread()
+        {
+            var ServerId1 = Guid.NewGuid();
+            var ThreadId1 = Guid.NewGuid();
+            var ServerId2 = Guid.NewGuid();
+            var ThreadId2 = Guid.NewGuid();
+            
+            var OrdersList = new List<OrderContract>()
+            {
+                new()
+                {
+                  OrderType = "start movement",
+                  GameId = ServerId1,
+                  ObjectId = "1",
+                  Properties = new(){{"Velocity", 1}}
+                },
+                
+                new()
+                {
+                  OrderType = "start rotatement",
+                  GameId = ServerId2,
+                  ObjectId = "1",
+                  Properties = new(){{"Angle_Velocity", 1}}
+                },
+                
+                new()
+                {
+                  OrderType = "stop",
+                  GameId = ServerId1,
+                  ObjectId= "1",
+                },
+
+                new()
+                {
+                  OrderType = "fire",
+                  GameId = ServerId2,
+                  ObjectId= "1",
+                }
+            };
+            var CreatOrderCmd = new Mock<ICommand>();
+            CreatOrderCmd.Setup(cmd => cmd.Execute()).Verifiable();
+            var StartThreadCMD1 = new Mock<ICommand>();
+            StartThreadCMD1.Setup(cmd => cmd.Execute()).Verifiable();
+            var StartThreadCMD2 = new Mock<ICommand>();
+            StartThreadCMD2.Setup(cmd => cmd.Execute()).Verifiable();
+
+            IoC.Resolve<ICommand>("Server.Commands.CreateStartThread",ServerId1,ThreadId1,() =>{StartThreadCMD1.Object.Execute();}).Execute();
+            IoC.Resolve<ICommand>("Server.Commands.CreateStartThread",ServerId2,ThreadId2,() =>{StartThreadCMD2.Object.Execute();}).Execute();
+            IoC.Resolve<ICommand>("IoC.Register","CreatOrderCmd", (object[] args) =>{
+                return CreatOrderCmd.Object;
+            }).Execute();
+
+            var webApi = new WebApi();
+
+            var response1 = webApi.PostOrder(OrdersList[0]);
+            var response2 = webApi.PostOrder(OrdersList[1]);
+            OrdersList.ForEach(order => webApi.PostOrder(order));
+
+            Assert.Equal("Code 202 - Accepted " + ServerId1,response1);
+            Assert.Equal("Code 202 - Accepted " + ServerId2,response2);
+
+            Assert.True(IoC.Resolve<Dictionary<Guid, BlockingCollection<ICommand>>>("GetQueueCollection").Count() == 2);
+            StartThreadCMD1.Verify(cmd=> cmd.Execute(),Times.Once());
+            StartThreadCMD2.Verify(cmd => cmd.Execute(),Times.Once());
+            CreatOrderCmd.Verify(cmd => cmd.Execute(),Times.Exactly(6));
         }
     }

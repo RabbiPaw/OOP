@@ -22,7 +22,7 @@ namespace WebHttp
                 IoC.Resolve<ICommand>("Server.Commands.SendCommand",
                     IoC.Resolve<List<Guid>>("Server.Command.GetThreadId", input.GameId)[0],
                         IoC.Resolve<ICommand>("CreatOrderCmd",input)).Execute();
-                var response = "Code 202 - Accepted";
+                var response = "Code 202 - Accepted " + input.GameId;
                 return response;
                     }
                 }
