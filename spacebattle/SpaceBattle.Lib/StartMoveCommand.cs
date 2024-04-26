@@ -1,7 +1,7 @@
 using Hwdtech;
 
 namespace SpaceBattle.Lib;
-public class StartMoveCommand : ICommand
+public class StartMoveCommand : Hwdtech.ICommand
 {
         private readonly IMoveCommandStartable _startable;
 
