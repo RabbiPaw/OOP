@@ -6,11 +6,11 @@ using Hwdtech;
 public class ServerThread
 {
     private Action _behaviour;
-    private readonly BlockingCollection<ICommand> _queue;
+    private readonly BlockingCollection<Hwdtech.ICommand> _queue;
     private readonly Thread _thread;
     private bool _stop = false;
 
-    public ServerThread(BlockingCollection<ICommand> queue)
+    public ServerThread(BlockingCollection<Hwdtech.ICommand> queue)
     {
         _queue = queue;
 

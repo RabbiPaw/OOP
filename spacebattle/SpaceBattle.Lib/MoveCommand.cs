@@ -6,7 +6,7 @@ public interface IMovable
     public Vector Velocity { get; }
 }
 
-public class MoveCommand : ICommand
+public class MoveCommand : Hwdtech.ICommand
 {
     private readonly IMovable movable;
     public MoveCommand(IMovable movable)

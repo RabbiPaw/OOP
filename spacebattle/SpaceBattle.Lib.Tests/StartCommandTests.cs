@@ -13,22 +13,22 @@ public class StartCommandTests
         new InitScopeBasedIoCImplementationCommand().Execute();
 
         var movement = new Mock<ICommand>();
-        IoC.Resolve<Hwdtech.ICommand>(
+        IoC.Resolve<ICommand>(
             "IoC.Register","Operations.Movement",
             (object[] args) => movement.Object
             ).Execute();
 
         var injectable = new Mock<ICommand>();
-        IoC.Resolve<Hwdtech.ICommand>(
+        IoC.Resolve<ICommand>(
             "IoC.Register","Commands.Injectable",
             (object[] args) => injectable.Object
             ).Execute();
 
         var setPropertiesCommand = new Mock<ICommand>();
-        IoC.Resolve<Hwdtech.ICommand>("IoC.Register","Properties.Set",(object[] args) => setPropertiesCommand.Object ).Execute();
+        IoC.Resolve<ICommand>("IoC.Register","Properties.Set",(object[] args) => setPropertiesCommand.Object ).Execute();
 
         q = new Mock<IQueue>();
-        IoC.Resolve<Hwdtech.ICommand>("IoC.Register","Game.Queue", (object[] args) => q.Object).Execute();
+        IoC.Resolve<ICommand>("IoC.Register","Game.Queue", (object[] args) => q.Object).Execute();
     }
 
     
@@ -46,7 +46,7 @@ public class StartCommandTests
         startMoveCommand.Execute();
 
         startable.Verify(s => s.Properties, Times.Once());
-        q.Verify(q => q.Put(It.IsAny<ICommand>()), Times.Once());
+        q.Verify(q => q.Put(It.IsAny<Hwdtech.ICommand>()), Times.Once());
     }
     [Fact]
     public void NoIUObject()
