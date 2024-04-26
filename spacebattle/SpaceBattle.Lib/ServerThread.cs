@@ -53,7 +53,7 @@ public class ServerThread
     {
         _thread.Start();
     }
-    public bool IsNotEmpty() 
+    public bool IsNotEmpty()
     {
         return Convert.ToBoolean(_queue.Count());
     }

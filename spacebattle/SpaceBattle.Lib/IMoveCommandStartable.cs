@@ -2,6 +2,6 @@
 
 public interface IMoveCommandStartable
 {
-    IUObject Target {get;}
-    Dictionary<string, object> Properties {get;}
+    IUObject Target { get; }
+    Dictionary<string, object> Properties { get; }
 }
