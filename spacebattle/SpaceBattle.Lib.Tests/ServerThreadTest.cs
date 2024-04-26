@@ -11,12 +11,16 @@ public class ServerThreadTest
     public ServerThreadTest()
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
+<<<<<<< HEAD
 
         IoC.Resolve<ICommand>("Scopes.Current.Set",
             IoC.Resolve<object>("Scopes.New",
                 IoC.Resolve<object>("Scopes.Root")
             )
         ).Execute();
+=======
+        
+>>>>>>> 6edfca0 (Реализация тестов для SoftStop)
 
         IoC.Resolve<ICommand>("IoC.Register","Server.Commands.HardStop",(object[] args) =>
         {
@@ -39,6 +43,12 @@ public class ServerThreadTest
                 }
             });
         }).Execute();
+
+                IoC.Resolve<ICommand>("Scopes.Current.Set",
+            IoC.Resolve<object>("Scopes.New",
+                IoC.Resolve<object>("Scopes.Root")
+            )
+        ).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.SoftStop", (object[] args) =>
         {
@@ -146,6 +156,64 @@ public class ServerThreadTest
 
         endcmd.Verify(endcmd => endcmd.Execute(), Times.Never());
         Assert.Single(q1);
-
     }
+
+    [Fact]
+    public void SoftStopCommandShouldStopServer()
+    {
+        var mre = new ManualResetEvent(false);
+        var q = new BlockingCollection<ICommand>(100);
+        var t = new ServerThread(q);
+
+        var softStopCommand = new SoftStopCommand(t, () => { mre.Set(); });
+
+        q.Add(new ActionCommand(() => { }));
+        q.Add(new ActionCommand(() => { Thread.Sleep(3000); }));
+        q.Add(softStopCommand);
+        q.Add(new ActionCommand(() => { }));
+
+        t.Start();
+        mre.WaitOne();
+
+        Assert.Empty(q);
+    }
+
+    [Fact]
+    public void SoftStopCommandDoesNotStopAnotherThread()
+    {
+        var mre = new ManualResetEvent(false);
+        var q1 = new BlockingCollection<ICommand>(100);
+        var t1 = new ServerThread(q1);
+        var q2 = new BlockingCollection<ICommand>(100);
+        var t2 = new ServerThread(q2);
+
+        var endcmd = new Mock<ICommand>();
+
+        var wrongSoftStop = IoC.Resolve<ICommand>("Server.Commands.SoftStop", t2, () => { endcmd.Object.Execute(); });
+        var softStop1 = IoC.Resolve<ICommand>("Server.Commands.SoftStop", t1);
+        var softStop2 = IoC.Resolve<ICommand>("Server.Commands.SoftStop", t2, () => { mre.Set(); });
+
+        q1.Add(new ActionCommand(() => { }));
+        q1.Add(wrongSoftStop);
+
+        q2.Add(new ActionCommand(() => { }));
+        q2.Add(new ActionCommand(() => { Thread.Sleep(3000); }));
+        q2.Add(softStop2);
+
+        t1.Start();
+        t2.Start();
+
+        q1.Add(new ActionCommand(() => { Thread.Sleep(1000); }));
+        q1.Add(softStop1);
+        q1.Add(new ActionCommand(() => { }));
+
+        q2.Add(new ActionCommand(() => { Thread.Sleep(1000); }));
+        q2.Add(softStop2);
+
+        mre.WaitOne();
+
+        endcmd.Verify(endcmd => endcmd.Execute(), Times.Never());
+        Assert.Empty(q1);
+    }
+
 }
