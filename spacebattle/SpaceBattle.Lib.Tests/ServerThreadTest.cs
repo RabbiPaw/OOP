@@ -11,13 +11,13 @@ public class ServerThreadTest
     public ServerThreadTest()
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
-        
 
-        IoC.Resolve<ICommand>("IoC.Register","Server.Commands.HardStop",(object[] args) =>
+
+        IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
         {
             if (args.Count() == 2)
             {
-                return new ActionCommand(()=>
+                return new ActionCommand(() =>
                 {
                     if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
                     {
@@ -26,7 +26,7 @@ public class ServerThreadTest
                     }
                 });
             }
-            return new ActionCommand(()=>
+            return new ActionCommand(() =>
             {
                 if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
                 {
@@ -35,11 +35,11 @@ public class ServerThreadTest
             });
         }).Execute();
 
-                IoC.Resolve<ICommand>("Scopes.Current.Set",
-            IoC.Resolve<object>("Scopes.New",
-                IoC.Resolve<object>("Scopes.Root")
-            )
-        ).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set",
+    IoC.Resolve<object>("Scopes.New",
+        IoC.Resolve<object>("Scopes.Root")
+    )
+).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.SoftStop", (object[] args) =>
         {
@@ -51,7 +51,7 @@ public class ServerThreadTest
             return new SoftStopCommand((ServerThread)args[0], () => { });
         }).Execute();
 
-         var queueCollection = new Dictionary<Guid, BlockingCollection<ICommand>>();
+        var queueCollection = new Dictionary<Guid, BlockingCollection<ICommand>>();
         var threadCollection = new Dictionary<Guid, ServerThread>();
 
         IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.RegisterThread", (object[] args) =>
