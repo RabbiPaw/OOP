@@ -12,7 +12,7 @@ public class ServerThreadTest
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
 
-                IoC.Resolve<ICommand>("IoC.Register","Server.Commands.HardStop",(object[] args) =>
+        IoC.Resolve<ICommand>("IoC.Register","Server.Commands.HardStop",(object[] args) =>
         {
             if (args.Count() == 2){
                 return new ActionCommand(() =>
@@ -45,12 +45,7 @@ public class ServerThreadTest
         var queueCollection = new Dictionary<Guid, BlockingCollection<ICommand>>();
         var threadCollection = new Dictionary<Guid, ServerThread>();
 
-         IoC.Resolve<ICommand>(
-            "Scopes.Current.Set",
-            IoC.Resolve<object>("Scopes.New",
-                IoC.Resolve<object>("Scopes.Root")
-                )
-        ).Execute();
+        IoC.Resolve<ICommand>("Scopes.Current.Set",IoC.Resolve<object>("Scopes.New",IoC.Resolve<object>("Scopes.Root"))).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register","Server.Commands.RegisterThread", (object[] args) =>
         {
