@@ -14,12 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 8.0.4
 
       - name: Restore dependencies
         run: cd spacebattle && dotnet restore SpaceBattle.Lib.Tests
@@ -31,7 +35,7 @@ jobs:
           dotnet tool install coverlet.console
       - name: Build
         run: cd spacebattle && dotnet build
-      - name: Coverage and test
+      - name: Restore tool, Coverage and test
         run: cd spacebattle && dotnet tool restore && dotnet coverlet SpaceBattle.Lib.Tests/bin/Debug/net8.0/SpaceBattle.Lib.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
       - name: Checkstyle
         run: cd spacebattle && dotnet format --verify-no-changes
