@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      -'LR**'
+      -'LR_**'
   pull_request:
     branches :
       - main 
