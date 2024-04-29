@@ -12,6 +12,11 @@ public class ServerThreadTest
     {
         new InitScopeBasedIoCImplementationCommand().Execute();
 
+        IoC.Resolve<ICommand>("Scopes.Current.Set",
+            IoC.Resolve<object>("Scopes.New",
+                IoC.Resolve<object>("Scopes.Root")
+                )
+            ).Execute();
 
         IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
         {
@@ -35,12 +40,6 @@ public class ServerThreadTest
             });
         }).Execute();
 
-        IoC.Resolve<ICommand>("Scopes.Current.Set",
-    IoC.Resolve<object>("Scopes.New",
-        IoC.Resolve<object>("Scopes.Root")
-    )
-).Execute();
-
         IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.SoftStop", (object[] args) =>
         {
             if (args.Count() == 2)
@@ -50,6 +49,35 @@ public class ServerThreadTest
 
             return new SoftStopCommand((ServerThread)args[0], () => { });
         }).Execute();
+
+        var pill = new ActionCommand(()=>
+        {
+                    IoC.Resolve<ICommand>("Scopes.Current.Set",IoC.Resolve<object>("Scopes.New",IoC.Resolve<object>("Scopes.Root"))).Execute();
+
+                    IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
+        {
+            if (args.Count() == 2)
+            {
+                return new ActionCommand(() =>
+                {
+                    if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
+                    {
+                        new HardStopCommand((ServerThread)args[0]).Execute();
+                        new ActionCommand((Action)args[1]).Execute();
+                    }
+                });
+            }
+            return new ActionCommand(() =>
+            {
+                if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
+                {
+                    new HardStopCommand((ServerThread)args[0]).Execute();
+                }
+            });
+        }).Execute();
+        });
+
+        IoC.Resolve<ICommand>("IoC.Register", "pill", (object[] args) => { return pill; }).Execute();
 
         var queueCollection = new Dictionary<Guid, BlockingCollection<ICommand>>();
         var threadCollection = new Dictionary<Guid, ServerThread>();
@@ -123,12 +151,7 @@ public class ServerThreadTest
 
         var hardStopCommand = IoC.Resolve<ICommand>("Server.Commands.HardStop", t, () => { mre.Set(); });
 
-        q.Add(IoC.Resolve<ICommand>(
-            "Scopes.Current.Set",
-            IoC.Resolve<object>("Scopes.New",
-            IoC.Resolve<object>("Scopes.Root")
-            ))
-        );
+        q.Add(IoC.Resolve<ICommand>("pill"));
 
         var exceptionHandler = new Mock<ICommand>();
         exceptionHandler.Setup(m => m.Execute()).Verifiable();
@@ -214,7 +237,7 @@ public class ServerThreadTest
 
         var softStopCommand = new SoftStopCommand(t, () => { mre.Set(); });
 
-        q.Add(new ActionCommand(() => { }));
+        q.Add(IoC.Resolve<ICommand>("pill"));
         q.Add(new ActionCommand(() => { Thread.Sleep(3000); }));
         q.Add(softStopCommand);
         q.Add(new ActionCommand(() => { }));
@@ -240,10 +263,10 @@ public class ServerThreadTest
         var softStop1 = IoC.Resolve<ICommand>("Server.Commands.SoftStop", t1);
         var softStop2 = IoC.Resolve<ICommand>("Server.Commands.SoftStop", t2, () => { mre.Set(); });
 
-        q1.Add(new ActionCommand(() => { }));
+        q1.Add(IoC.Resolve<ICommand>("pill"));;
         q1.Add(wrongSoftStop);
 
-        q2.Add(new ActionCommand(() => { }));
+        q2.Add(IoC.Resolve<ICommand>("pill"));
         q2.Add(new ActionCommand(() => { Thread.Sleep(3000); }));
         q2.Add(softStop2);
 
