@@ -8,7 +8,7 @@ using CoreWCF.OpenApi.Attributes;
 using CoreWCF.Web;
 namespace SpaceBattle.Lib.WebHttp
 {
-    
+
     // Note the OpenAPI attributes are not strictly necessary as defaults are chosen in most cases,
     // but are used here to show how they can customize the swagger documentation.
     [ServiceContract]
