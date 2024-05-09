@@ -17,42 +17,8 @@ public class ServerThreadTest
                 IoC.Resolve<object>("Scopes.Root")
                 )
             ).Execute();
-        
-        IoC.Resolve<ICommand>("IoC.Register","Server.Commands.HardStop",(object[] args) =>
-        {
-            if (args.Count() == 2)
-            {
-                return new ActionCommand(()=>
-                {
-                    if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
-                    {
-                        new HardStopCommand((ServerThread)args[0]).Execute();
-                        new ActionCommand((Action)args[1]).Execute();
-                    }
-                });
-            }
-            return new ActionCommand(()=>
-            {
-                if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
-                {
-                    new HardStopCommand((ServerThread)args[0]).Execute();
-                }
-            });
-        }).Execute();
 
-        IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.SoftStop", (object[] args) =>
-        {
-            if (args.Count() == 2)
-            {
-                return new SoftStopCommand((ServerThread)args[0], (Action)args[1]);
-            }
-            return new SoftStopCommand((ServerThread)args[0], () => { });
-        }).Execute();
-
-         var pill = new ActionCommand(()=>
-        {
-                    IoC.Resolve<ICommand>("Scopes.Current.Set",IoC.Resolve<object>("Scopes.New",IoC.Resolve<object>("Scopes.Root"))).Execute();
-                    IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
+        IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
         {
             if (args.Count() == 2)
             {
@@ -73,7 +39,41 @@ public class ServerThreadTest
                 }
             });
         }).Execute();
-        });
+
+        IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.SoftStop", (object[] args) =>
+        {
+            if (args.Count() == 2)
+            {
+                return new SoftStopCommand((ServerThread)args[0], (Action)args[1]);
+            }
+            return new SoftStopCommand((ServerThread)args[0], () => { });
+        }).Execute();
+
+        var pill = new ActionCommand(() =>
+       {
+           IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
+           IoC.Resolve<ICommand>("IoC.Register", "Server.Commands.HardStop", (object[] args) =>
+{
+           if (args.Count() == 2)
+           {
+               return new ActionCommand(() =>
+               {
+                   if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
+                   {
+                       new HardStopCommand((ServerThread)args[0]).Execute();
+                       new ActionCommand((Action)args[1]).Execute();
+                   }
+               });
+           }
+           return new ActionCommand(() =>
+           {
+               if (((ServerThread)args[0]).Equals(Thread.CurrentThread))
+               {
+                   new HardStopCommand((ServerThread)args[0]).Execute();
+               }
+           });
+       }).Execute();
+       });
 
         IoC.Resolve<ICommand>("IoC.Register", "pill", (object[] args) => { return pill; }).Execute();
 
