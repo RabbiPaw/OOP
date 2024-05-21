@@ -151,7 +151,7 @@ public class GameCommandTest
         cmd.Setup(x => x.Execute()).Verifiable();
 
         q.Enqueue(IoC.Resolve<ICommand>("pill"));
-        q.Enqueue(new ActionCommand(()=>{Thread.Sleep(100);}));
+        q.Enqueue(new ActionCommand(() => { Thread.Sleep(100); }));
         q.Enqueue(cmd.Object);
 
         var gameCommand = new GameCommand(q, scope, ExceptionDictionary);
