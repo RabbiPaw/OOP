@@ -4,11 +4,11 @@ using Hwdtech.Ioc;
 
 public class ExceptionChecker : ICommand
 {
-    private  readonly Exception _exception;
-    private  readonly ICommand _cmd;
+    private readonly Exception _exception;
+    private readonly ICommand _cmd;
 
-    private readonly Dictionary<ICommand,Exception> _ExceptionDict;
-    public ExceptionChecker(ICommand cmd, Exception exception, Dictionary<ICommand,Exception> ExceptionDict)
+    private readonly Dictionary<ICommand, Exception> _ExceptionDict;
+    public ExceptionChecker(ICommand cmd, Exception exception, Dictionary<ICommand, Exception> ExceptionDict)
     {
         _exception = exception;
         _cmd = cmd;
@@ -17,14 +17,14 @@ public class ExceptionChecker : ICommand
 
     public void Execute()
     {
-        if (_ExceptionDict.ContainsKey(_cmd) && _ExceptionDict[_cmd]!= null && _ExceptionDict[_cmd] == _exception)
+        if (_ExceptionDict.ContainsKey(_cmd) && _ExceptionDict[_cmd] != null && _ExceptionDict[_cmd] == _exception)
         {
             IoC.Resolve<Exception>("ExceptionHandler.Handle", _cmd, _exception);
         }
         else
         {
-            _ExceptionDict[_cmd]= _exception;
-            IoC.Resolve<ICommand>("ExceptionHandler.Checker", _cmd, _exception,_ExceptionDict).Execute();
+            _ExceptionDict[_cmd] = _exception;
+            IoC.Resolve<ICommand>("ExceptionHandler.Checker", _cmd, _exception, _ExceptionDict).Execute();
         }
     }
 }
