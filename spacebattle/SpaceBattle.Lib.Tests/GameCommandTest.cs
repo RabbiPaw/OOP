@@ -15,7 +15,7 @@ public class GameCommandTest
             IoC.Resolve<object>("Scopes.New",
                 IoC.Resolve<object>("Scopes.Root"))).Execute();
     
-    var ED = new Dictionary<ICommand,Exception>();
+    var ED = new Dictionary<ICommand,Exception?>();
     
     IoC.Resolve<ICommand>("IoC.Register", "GetExceptionDict", (object[] args) => { return ED; }).Execute();
 
@@ -70,7 +70,7 @@ public class GameCommandTest
 
     [Fact]
 
-    public void Exception_dont_stop_programm()
+    public void There_is_no_exception_in_the_dictionary_by_key()
     {
         var ExceptionDictionary = IoC.Resolve<Dictionary<ICommand,Exception>>("GetExceptionDict");
         var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
@@ -79,6 +79,54 @@ public class GameCommandTest
         var exceptionCMD = new Mock<ICommand>();
         cmd.Setup(x => x.Execute()).Verifiable();
         exceptionCMD.Setup(x => x.Execute()).Throws<Exception>().Verifiable();
+
+        q.Enqueue(IoC.Resolve<ICommand>("pill"));
+        q.Enqueue(exceptionCMD.Object);
+        q.Enqueue(exceptionCMD.Object);
+        q.Enqueue(cmd.Object);
+
+        var gameCommand = new GameCommand (q,scope, ExceptionDictionary);
+        gameCommand.Execute();
+
+        cmd.Verify(x => x.Execute(), Times.Once);
+        
+        Assert.Single(ExceptionDictionary);
+    }
+    [Fact]
+    public void There_is_no_exception_in_the_dictionary_by_value()
+    {
+        var ExceptionDictionary = IoC.Resolve<Dictionary<ICommand,Exception>>("GetExceptionDict");
+        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+        var q = new Queue<ICommand>();
+        var cmd = new Mock<ICommand>();
+        var exceptionCMD = new Mock<ICommand>();
+        cmd.Setup(x => x.Execute()).Verifiable();
+        exceptionCMD.Setup(x => x.Execute()).Throws<Exception>().Verifiable();
+        ExceptionDictionary[exceptionCMD.Object] = null;
+
+        q.Enqueue(IoC.Resolve<ICommand>("pill"));
+        q.Enqueue(exceptionCMD.Object);
+        q.Enqueue(exceptionCMD.Object);
+        q.Enqueue(cmd.Object);
+
+        var gameCommand = new GameCommand (q,scope, ExceptionDictionary);
+        gameCommand.Execute();
+
+        cmd.Verify(x => x.Execute(), Times.Once);
+        
+        Assert.Single(ExceptionDictionary);
+    }
+    [Fact]
+    public void There_is_no_exception_in_the_dictionary_by_another_value()
+    {
+        var ExceptionDictionary = IoC.Resolve<Dictionary<ICommand,Exception>>("GetExceptionDict");
+        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+        var q = new Queue<ICommand>();
+        var cmd = new Mock<ICommand>();
+        var exceptionCMD = new Mock<ICommand>();
+        cmd.Setup(x => x.Execute()).Verifiable();
+        exceptionCMD.Setup(x => x.Execute()).Throws<Exception>().Verifiable();
+        ExceptionDictionary[exceptionCMD.Object] = null;
 
         q.Enqueue(IoC.Resolve<ICommand>("pill"));
         q.Enqueue(exceptionCMD.Object);

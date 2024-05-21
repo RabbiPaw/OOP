@@ -17,13 +17,14 @@ public class ExceptionChecker : ICommand
 
     public void Execute()
     {
-        if (_ExceptionDict.ContainsKey(_cmd) && _ExceptionDict[_cmd]!= null)
+        if (_ExceptionDict.ContainsKey(_cmd) && _ExceptionDict[_cmd]!= null && _ExceptionDict[_cmd] == _exception)
         {
             IoC.Resolve<Exception>("ExceptionHandler.Handle", _cmd, _exception);
         }
         else
         {
             _ExceptionDict[_cmd]= _exception;
+            IoC.Resolve<ICommand>("ExceptionHandler.Checker", _cmd, _exception,_ExceptionDict).Execute();
         }
     }
 }
