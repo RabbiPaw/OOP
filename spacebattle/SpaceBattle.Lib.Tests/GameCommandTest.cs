@@ -36,7 +36,7 @@ public class GameCommandTest
         }).Execute();
         var pill = new ActionCommand(() =>
            {
-               IoC.Resolve<ICommand>("IoC.Register", "Game.TimeQuant", (object[] args) => { return (object)2000; }).Execute();
+               IoC.Resolve<ICommand>("IoC.Register", "Game.TimeQuant", (object[] args) => { return (object)50; }).Execute();
                IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => { return (object)ED[(ICommand)args[0]]; }).Execute();
                IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Checker", (object[] args) =>
                {
@@ -139,5 +139,24 @@ public class GameCommandTest
         cmd.Verify(x => x.Execute(), Times.Once);
 
         Assert.Single(ExceptionDictionary);
+    }
+
+    [Fact]
+    public void Time_quant_test()
+    {
+        var ExceptionDictionary = IoC.Resolve<Dictionary<ICommand, Exception>>("GetExceptionDict");
+        var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+        var q = new Queue<ICommand>();
+        var cmd = new Mock<ICommand>();
+        cmd.Setup(x => x.Execute()).Verifiable();
+
+        q.Enqueue(IoC.Resolve<ICommand>("pill"));
+        q.Enqueue(new ActionCommand(()=>{Thread.Sleep(100);}));
+        q.Enqueue(cmd.Object);
+
+        var gameCommand = new GameCommand(q, scope, ExceptionDictionary);
+        gameCommand.Execute();
+
+        cmd.Verify(x => x.Execute(), Times.Never);
     }
 }
