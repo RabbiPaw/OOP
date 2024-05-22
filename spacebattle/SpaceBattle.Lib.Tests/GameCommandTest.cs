@@ -126,7 +126,7 @@ public class GameCommandTest
         var exceptionCMD = new Mock<ICommand>();
         cmd.Setup(x => x.Execute()).Verifiable();
         exceptionCMD.Setup(x => x.Execute()).Throws<Exception>().Verifiable();
-        ExceptionDictionary[exceptionCMD.Object] = null;
+        ExceptionDictionary[exceptionCMD.Object] = new ArgumentException();
 
         q.Enqueue(IoC.Resolve<ICommand>("pill"));
         q.Enqueue(exceptionCMD.Object);

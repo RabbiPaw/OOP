@@ -7,16 +7,16 @@ public class GameCommand : ICommand
     private Queue<ICommand> _q;
     private object _scope;
     private Dictionary<ICommand, Exception> _ExceptDict;
+    private Stopwatch stopwatch;
     public GameCommand(Queue<ICommand> q, object scope, Dictionary<ICommand, Exception> ExeptDict)
     {
         _q = q;
         _scope = scope;
         _ExceptDict = ExeptDict;
-
+        stopwatch = new();
     }
     public void Execute()
     {
-        Stopwatch stopwatch = new();
         IoC.Resolve<ICommand>("Scopes.Current.Set", _scope).Execute();
         _q.Dequeue().Execute();
         var timeQuant = IoC.Resolve<int>("Game.TimeQuant");
