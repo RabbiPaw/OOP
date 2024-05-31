@@ -37,7 +37,7 @@ public class GameCommandTest
         var pill = new ActionCommand(() =>
            {
                IoC.Resolve<ICommand>("IoC.Register", "Game.TimeQuant", (object[] args) => { return (object)50; }).Execute();
-               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => { return (object)ED[(ICommand)args[0]]; }).Execute();
+               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => { return (object?)ED[(ICommand)args[0]]; }).Execute();
                IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Checker", (object[] args) =>
                {
                    return new ExceptionChecker((ICommand)args[0], (Exception)args[1], (Dictionary<ICommand, Exception>)args[2]);
@@ -102,7 +102,6 @@ public class GameCommandTest
         var exceptionCMD = new Mock<ICommand>();
         cmd.Setup(x => x.Execute()).Verifiable();
         exceptionCMD.Setup(x => x.Execute()).Throws<Exception>().Verifiable();
-        ExceptionDictionary[exceptionCMD.Object] = null;
 
         q.Enqueue(IoC.Resolve<ICommand>("pill"));
         q.Enqueue(exceptionCMD.Object);
