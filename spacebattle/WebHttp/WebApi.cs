@@ -15,11 +15,6 @@ namespace SpaceBattle.Lib.WebHttp
         {
             try
             {
-                if (input.ObjectId == null || input.OrderType == null)
-                {
-                    throw new Exception();
-                }
-
                 var ServerThreadId = (Guid)IoC.Resolve<object>("Server.Commands.TryGetServerIdByGameId", input.GameId);
 
                 IoC.Resolve<ICommand>("Server.Commands.SendCommand"
@@ -29,7 +24,7 @@ namespace SpaceBattle.Lib.WebHttp
             }
             catch (Exception)
             {
-                return "Code 400 - Bad input";
+                return "Code 400 - Not found your game";
             }
         }
     }
