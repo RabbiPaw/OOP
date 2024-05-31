@@ -16,10 +16,7 @@ namespace SpaceBattle.Lib.WebHttp
             try
             {
                 var ServerThreadId = (Guid)IoC.Resolve<object>("Server.Commands.TryGetServerIdByGameId", input.GameId);
-
-                IoC.Resolve<ICommand>("Server.Commands.SendCommand"
-                    , ServerThreadId,
-                       IoC.Resolve<ICommand>("CreateOrderCmd", input)).Execute();
+                IoC.Resolve<ICommand>("Server.Commands.SendCommand", ServerThreadId, IoC.Resolve<ICommand>("CreateOrderCmd", input)).Execute();
                 return "Code 202 - Accepted";
             }
             catch (Exception)
