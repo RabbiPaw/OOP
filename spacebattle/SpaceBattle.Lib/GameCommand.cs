@@ -30,10 +30,11 @@ public class GameCommand : ICommand
             }
             catch (Exception e)
             {
-                try{
+                try
+                {
                     IoC.Resolve<ICommand>("ExceptionHandler.Checker", cmd, e, _ExceptDict).Execute();
                 }
-                catch(Exception e2)
+                catch (Exception e2)
                 {
                     IoC.Resolve<ICommand>("ExceptionHandler.Checker", cmd, e2, _ExceptDict).Execute();
                 }
