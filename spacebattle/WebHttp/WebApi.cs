@@ -24,7 +24,7 @@ namespace SpaceBattle.Lib.WebHttp
             catch (Exception ex)
             {
                 return (string)IoC.Resolve<object>("Server.Exception.ExceptionHandler", ex);
-                
+
             }
         }
     }

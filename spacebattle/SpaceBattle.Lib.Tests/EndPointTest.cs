@@ -18,18 +18,20 @@ public class EndPointTest
         var queueCollection = new Dictionary<Guid, BlockingCollection<ICommand>>();
         var IdServersAndThreads = new Dictionary<Guid, Guid>();
         var ExceptionResponse = new Dictionary<Exception, string>();
-        
+
 
         IoC.Resolve<ICommand>("IoC.Register", "Server.Exception.ExceptionHandler", (object[] args) =>
         {
-            if (ExceptionResponse.ContainsKey((Exception)args[0])){
-            return ExceptionResponse[(Exception)args[0]];
+            if (ExceptionResponse.ContainsKey((Exception)args[0]))
+            {
+                return ExceptionResponse[(Exception)args[0]];
             }
             else
             {
                 var ErrorKey = ((Exception)args[0]).TargetSite?.Name;
-                if (ErrorKey == "ThrowKeyNotFoundException"){
-                    ExceptionResponse.Add((Exception)args[0],"Code 400 - Not found your game");
+                if (ErrorKey == "ThrowKeyNotFoundException")
+                {
+                    ExceptionResponse.Add((Exception)args[0], "Code 400 - Not found your game");
                     return ExceptionResponse[(Exception)args[0]];
                 }
             }
