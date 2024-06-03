@@ -5,6 +5,8 @@ using Hwdtech;
 using System;
 using CoreWCF;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace SpaceBattle.Lib.WebHttp
 {
@@ -19,9 +21,10 @@ namespace SpaceBattle.Lib.WebHttp
                 IoC.Resolve<ICommand>("Server.Commands.SendCommand", ServerThreadId, IoC.Resolve<ICommand>("CreateOrderCmd", input)).Execute();
                 return "Code 202 - Accepted";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Code 400 - Not found your game";
+                return (string)IoC.Resolve<object>("Server.Exception.ExceptionHandler", ex);
+                
             }
         }
     }
