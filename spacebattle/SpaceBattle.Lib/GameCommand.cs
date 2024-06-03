@@ -18,6 +18,7 @@ public class GameCommand : ICommand
     public void Execute()
     {
         IoC.Resolve<ICommand>("Scopes.Current.Set", _scope).Execute();
+        _q.Dequeue().Execute();
         var timeQuant = IoC.Resolve<int>("Game.TimeQuant");
         while (_q.Count > 0 && timeQuant >= 0)
         {
