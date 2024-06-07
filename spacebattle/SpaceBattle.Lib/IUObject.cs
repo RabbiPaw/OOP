@@ -1,11 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace SpaceBattle.Lib;
 public interface IUObject
 {
-    void set_property(string key, object value);
-    object get_property(string key);
+    void SetProperty(string key, object value);
+    object GetProperty(string key);
+}
+
+public class UObject : IUObject
+{
+    private Dictionary<string, object> _properties;
+
+    public UObject()
+    {
+        _properties = new Dictionary<string, object>();
+    }
+
+    public void SetProperty(string name, object value)
+    {
+        _properties[name] = value;
+    }
+    public object GetProperty(string name)
+    {
+        return _properties[name];
+    }
 }
