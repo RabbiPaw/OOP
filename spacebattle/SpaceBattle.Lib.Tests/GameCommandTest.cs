@@ -30,25 +30,25 @@ public class GameCommandTest
         }).Execute();
         var pill = new ActionCommand(() =>
            {
-                IoC.Resolve<ICommand>("IoC.Register", "Game.TimeQuant", (object[] args) => { return (object)50; }).Execute();
-                IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => { return (string?)ED[(ICommand)args[0]]?.TargetSite?.Name; }).Execute();
-                IoC.Resolve<ICommand>("IoC.Register","ExceptionHandler.DefaultHandle", (object[] args) =>
-                {
-                    return (Exception)args[0];
-                }).Execute();
-               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Checker", (object[] args) =>
-               {    
-                return new ActionCommand(()=>
+               IoC.Resolve<ICommand>("IoC.Register", "Game.TimeQuant", (object[] args) => { return (object)50; }).Execute();
+               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Handle", (object[] args) => { return (string?)ED[(ICommand)args[0]]?.TargetSite?.Name; }).Execute();
+               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.DefaultHandle", (object[] args) =>
                {
-                    if (((Dictionary<ICommand,Exception>)args[2]).ContainsKey((ICommand)args[0]) && ((Dictionary<ICommand,Exception>)args[2])[(ICommand)args[0]] != null)
-                    {
-                    IoC.Resolve<string>("ExceptionHandler.Handle", (ICommand)args[0],(Exception)args[1]);
-                    }
-                    else
-                    {
-                    throw IoC.Resolve<Exception>("ExceptionHandler.DefaultHandle",(Exception)args[1]);;
-                    }
-               });
+                   return (Exception)args[0];
+               }).Execute();
+               IoC.Resolve<ICommand>("IoC.Register", "ExceptionHandler.Checker", (object[] args) =>
+               {
+                   return new ActionCommand(() =>
+                  {
+                      if (((Dictionary<ICommand, Exception>)args[2]).ContainsKey((ICommand)args[0]) && ((Dictionary<ICommand, Exception>)args[2])[(ICommand)args[0]] != null)
+                      {
+                          IoC.Resolve<string>("ExceptionHandler.Handle", (ICommand)args[0], (Exception)args[1]);
+                      }
+                      else
+                      {
+                          throw IoC.Resolve<Exception>("ExceptionHandler.DefaultHandle", (Exception)args[1]); ;
+                      }
+                  });
                }).Execute();
            });
 
@@ -115,7 +115,7 @@ public class GameCommandTest
         q.Enqueue(cmd.Object);
 
         var gameCommand = new GameCommand(q, scope, ExceptionDictionary);
-        Assert.Throws<Exception>(() => {gameCommand.Execute();});
+        Assert.Throws<Exception>(() => { gameCommand.Execute(); });
         gameCommand.Execute();
         cmd.Verify(x => x.Execute(), Times.Once);
     }
