@@ -2,18 +2,23 @@ using Hwdtech;
 namespace SpaceBattle.Lib;
 
 public class UObjectGenerator : ICommand{
-    private readonly int _ObjectsCount;
+    private readonly int _objectsCount;
+    private readonly string? _objectType;
+    private Dictionary<int,UObject> _objects;
 
-    public UObjectGenerator(int ObjectsCount)
+    public UObjectGenerator(int ObjectsCount, string? ObjectType, Dictionary<int,UObject> objects)
     {
-        this._ObjectsCount = ObjectsCount;
+        this._objectsCount = ObjectsCount;
+        this._objectType = ObjectType;
+        this._objects = objects;
     }
 
     public void Execute()
     {
-        var ObjectList = IoC.Resolve<IDictionary<int,IUObject>>("Game.GetObjectList");
-        Enumerable.Range(0, _ObjectsCount).ToList().ForEach(
-            id => ObjectList.Add(id, IoC.Resolve<IUObject>("Game.CreatUObject")));
+        if (_objectType == null || _objectsCount == 0){throw new ArgumentNullException();}
+        for (int i = 0; i < _objectsCount*2;i++){
+            _objects.Add(i, IoC.Resolve<UObject>("Game.CreatUObject",_objectType));
+        }
     }
 
 }
