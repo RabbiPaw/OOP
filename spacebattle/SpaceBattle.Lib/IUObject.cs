@@ -5,17 +5,21 @@ public interface IUObject
     object GetProperty(string key);
 }
 
-public class UObject : IUObject{
+public class UObject : IUObject
+{
     private Dictionary<string, object> _properties;
 
-    public UObject(){
-        _properties = new Dictionary<string,object>();
+    public UObject()
+    {
+        _properties = new Dictionary<string, object>();
     }
 
-    public void SetProperty(string name, object value){
+    public void SetProperty(string name, object value)
+    {
         _properties[name] = value;
     }
-    public object GetProperty(string name){
+    public object GetProperty(string name)
+    {
         return _properties[name];
     }
 }
