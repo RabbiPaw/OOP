@@ -22,5 +22,4 @@ public class UObjectGenerator : ICommand
             _objects.Add(i, IoC.Resolve<UObject>("Game.CreatUObject", _objectType));
         }
     }
-
 }

@@ -18,5 +18,4 @@ public class SetPosition : ICommand
             _objects[i].SetProperty("Position", _PosList[i]);
         }
     }
-
 }
