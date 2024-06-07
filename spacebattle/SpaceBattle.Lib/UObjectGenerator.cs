@@ -5,7 +5,7 @@ public class UObjectGenerator : ICommand
 {
     private readonly int _objectsCount;
     private readonly string? _objectType;
-    private List <UObject> _objects;
+    private List<UObject> _objects;
 
     public UObjectGenerator(int ObjectsCount, string? ObjectType, List<UObject> objects)
     {
