@@ -46,6 +46,14 @@ public class StartGameInicialisationTest
                 }
                 return (List<Vector>)args[0];
             }).Execute();
+
+            IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
+                {
+                UObject uObject = new UObject();
+                uObject.SetProperty("Type", (string)args[0]);
+                uObject.SetProperty("Id", (int)args[1]);
+                return uObject;
+                }).Execute();
         });
         IoC.Resolve<ICommand>("IoC.Register", "pill", (object[] args) => { return pill; }).Execute();
     }
@@ -65,16 +73,6 @@ public class StartGameInicialisationTest
         string objectType = "spaceship";
         int objectsCount = 3;
         var SpaceShipsList = IoC.Resolve<List<UObject>>("Game.GetSpaceShipsList");
-
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
-        {
-            UObject uObject = new UObject();
-            uObject.SetProperty("Type", (string)args[0]);
-            uObject.SetProperty("Id", (int)args[1]);
-            return uObject;
-        }).Execute();
-
-
         var objectGenerator = new UObjectGenerator(objectsCount, objectType, SpaceShipsList);
         objectGenerator.Execute();
 
@@ -98,15 +96,6 @@ public class StartGameInicialisationTest
         string? objectType = null;
         int objectsCount = 3;
         var SpaceShipsList = IoC.Resolve<List<UObject>>("Game.GetSpaceShipsList");
-
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
-        {
-            UObject uObject = new UObject();
-            uObject.SetProperty("Type", (string)args[0]);
-            uObject.SetProperty("Id", (int)args[1]);
-            return uObject;
-        }).Execute();
-
         var objectGenerator = new UObjectGenerator(objectsCount, objectType, SpaceShipsList);
         Assert.Throws<ArgumentNullException>(() => objectGenerator.Execute());
     }
@@ -124,15 +113,6 @@ public class StartGameInicialisationTest
         string? objectType = "spaceship";
         int objectsCount = 0;
         var SpaceShipsList = IoC.Resolve<List<UObject>>("Game.GetSpaceShipsList");
-
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
-        {
-            UObject uObject = new UObject();
-            uObject.SetProperty("Type", (string)args[0]);
-            uObject.SetProperty("Id", (int)args[1]);
-            return uObject;
-        }).Execute();
-
         var objectGenerator = new UObjectGenerator(objectsCount, objectType, SpaceShipsList);
         Assert.Throws<ArgumentNullException>(() => objectGenerator.Execute());
     }
@@ -145,8 +125,6 @@ public class StartGameInicialisationTest
                 IoC.Resolve<object>("Scopes.Root")
                 )).Execute();
         p.Execute();
-
-        var uObject = new Mock<UObject>();
         string? objectType = "spaceship";
         int objectsCount = 3;
         var SpaceShipsList = IoC.Resolve<List<UObject>>("Game.GetSpaceShipsList");
@@ -154,16 +132,6 @@ public class StartGameInicialisationTest
         StartPos = IoC.Resolve<List<Vector>>("Game.CalculateStartPosition", StartPos, objectsCount);
 
         Assert.Equal(objectsCount * 2, StartPos.Count);
-
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
-        {
-            UObject uObject = new UObject();
-            uObject.SetProperty("Type", (string)args[0]);
-            uObject.SetProperty("Id", (int)args[1]);
-            return uObject;
-        }).Execute();
-
-
         var objectGenerator = new UObjectGenerator(objectsCount, objectType, SpaceShipsList);
         objectGenerator.Execute();
         var SetStartPosition = new SetPosition(SpaceShipsList, StartPos);
@@ -187,16 +155,6 @@ public class StartGameInicialisationTest
         int objectsCount = 3;
         var SpaceShipsList = IoC.Resolve<List<UObject>>("Game.GetSpaceShipsList");
         int Fuel = 40;
-
-
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
-        {
-            UObject uObject = new UObject();
-            uObject.SetProperty("Type", (string)args[0]);
-            uObject.SetProperty("Id", (int)args[1]);
-            return uObject;
-        }).Execute();
-
         var objectGenerator = new UObjectGenerator(objectsCount, objectType, SpaceShipsList);
         objectGenerator.Execute();
         var SetStartFuel = new SetFuel(SpaceShipsList, Fuel);
