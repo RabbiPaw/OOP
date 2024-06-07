@@ -49,10 +49,10 @@ public class StartGameInicialisationTest
 
             IoC.Resolve<ICommand>("IoC.Register", "Game.CreatUObject", (object[] args) =>
                 {
-                UObject uObject = new UObject();
-                uObject.SetProperty("Type", (string)args[0]);
-                uObject.SetProperty("Id", (int)args[1]);
-                return uObject;
+                    UObject uObject = new UObject();
+                    uObject.SetProperty("Type", (string)args[0]);
+                    uObject.SetProperty("Id", (int)args[1]);
+                    return uObject;
                 }).Execute();
         });
         IoC.Resolve<ICommand>("IoC.Register", "pill", (object[] args) => { return pill; }).Execute();
